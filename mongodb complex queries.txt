@@ -1,0 +1,1577 @@
+books> db.bookList.insertMany([{name:'java',nopage:300,author:[{name:'james gosling',place:'canada',born:1995}]}, {name:'python', nopage:250, author:[{name:'duido van rossum', born:1995, place:'Netherlands'}],yearOfPublish:19910}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("63d0b340b7d96e0673c4ed6c"),
+    '1': ObjectId("63d0b340b7d96e0673c4ed6d")
+  }
+}
+books> db.bookList.insertMany([{name:'javaScript',nopage:300,author:[{name:'CrockFord',place:'canada',born:1986},{name:'John Resig',place:'USA',born:1990}],yearOfPublish:1994}, {name:'php', nopage:250, author:[{name:'Rasmus', born:1980, place:'USA'}],yearOfPublish:1990}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("63d0b446b7d96e0673c4ed6e"),
+    '1': ObjectId("63d0b446b7d96e0673c4ed6f")
+  }
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ]
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990
+  }
+]
+books> db.bookList,update({name:'python'},{$set:{name:'Python'}})
+ReferenceError: update is not defined
+books> db.bookList.update({name:'python'},{$set:{name:'Python'}})
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ]
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990
+  }
+]
+books> db.bookList.update({$or:[{nopage:250},{nopage:350}]},{$set:{rating:5}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ]
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 5
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990
+  }
+]
+books> db.bookList.updateMany({$or:[{nopage:250},{nopage:350}]},{$set:{rating:5}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ]
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 5
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990,
+    rating: 5
+  }
+]
+books> db.bookList.updateMany({$and:[{nopage:250},{name:'java'}]},{$set:{rating:4}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ]
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 5
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990,
+    rating: 5
+  }
+]
+books> db.bookList.updateMany({$and:[{nopage:300},{name:'java'}]},{$set:{rating:4}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 5
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990,
+    rating: 5
+  }
+]
+books> db.bookList.updateMany({$and:[{nopage:{gt:300}},{name:'java'}]},{$set:{rating:4}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+books> db.bookList.updateMany({$and:[{nopage:{gt:250}},{name:'java'}]},{$set:{rating:4}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+books> db.bookList.updateMany({$and:[{nopage:{gt:250}},{name:'java'}]},{$set:{rating:4.5}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 5
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990,
+    rating: 5
+  }
+]
+books> db.bookList.updateMany({$and:[{nopage:{gt:250}},{name:'java'}]},{$set:{rating:4.5}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+books> db.bookList.update({$and:[{nopage:{gt:250}},{name:'java'}]},{$set:{rating:4.5}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+books> db.bookList.updateMany({$nor:[{nopage:250},{name:'java'}]},{$set:{rating:4.5}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 5
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 4.5
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990,
+    rating: 5
+  }
+]
+books> db.bookList.updateMany({$nor:[{nopage:250},{name:'java'}]},{$set:{rating:3.7}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 5
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990,
+    rating: 5
+  }
+]
+books> db.bookList.updateMany({$nor:[{nopage:300},{name:'java'}]},{$set:{rating:3.7}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 3.7
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990,
+    rating: 3.7
+  }
+]
+books> db.bookList.updateMany({nopage:{$not:{gt:250}}},{$set:{rating:4.5}})
+MongoServerError: unknown operator: gt
+books> db.bookList.updateMany({nopage:{$not:{$gt:250}}},{$set:{rating:4.5}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990,
+    rating: 4.5
+  }
+]
+books> db.bookList.find({yearOfPublish:{$gt:1990}})
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7
+  }
+]
+books> db.bookList.find({yearOfPublish:{$lt:1990}})
+
+books> db.bookList.find({yearOfPublish:{$gte:1990}})
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990,
+    rating: 4.5
+  }
+]
+books> db.bookList.update({name:'java'},{$set:{yearOfPublish:1899}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4,
+    yearOfPublish: 1899
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990,
+    rating: 4.5
+  }
+]
+books> db.bookList.find({yearOfPublish:{$gte:1991}})
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7
+  }
+]
+books> db.bookList.find({$or:[{yearOfPublish:{$gte:1991,$lte:1899}},{yearOfPublish:{$lte:1899}}]})
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4,
+    yearOfPublish: 1899
+  }
+]
+books> db.bookList.find({$and:[{name:'java'},{name:'Python'}]})
+
+books> db.bookList.find({$or:[{name:'java'},{name:'Python'}]})
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4,
+    yearOfPublish: 1899
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5
+  }
+]
+books> db.bookList.find({name:{$in:['java','Python']}])
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:46)
+
+> 1 | db.bookList.find({name:{$in:['java','Python']}])
+    |                                               ^
+books> db.bookList.find({name:{$in:['java','Python','javascript']}})
+[
+  {ks> db.bookList.find({name:{$in:['java','Python']}})
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,d("63d0b340b7d96e0673c4ed6c"),
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4,0,
+    yearOfPublish: 1899james gosling', place: 'canada', born: 1995 } ],
+  },rating: 4,
+  { yearOfPublish: 1899
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,d("63d0b340b7d96e0673c4ed6d"),
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5 name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+  } yearOfPublish: 19910,
+]   rating: 4.5
+books>
+]
+books>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+books> db.bookList.updateMany({}, {$set:{price:300}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 4,
+  modifiedCount: 4,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4,
+    yearOfPublish: 1899,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990,
+    rating: 4.5,
+    price: 300
+  }
+]
+books> db.bookList.updateMany({name:'java'},{$set:{price:{$multiply:['$price',10]}}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4,
+    yearOfPublish: 1899,
+    price: { '$multiply': [ '$price', 10 ] }
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990,
+    rating: 4.5,
+    price: 300
+  }
+]
+books> db.bookList.updateMany({name:'java'},{$mul:{price:10}})
+MongoServerError: Cannot apply $mul to a value of non-numeric type. {_id: ObjectId('63d0b340b7d96e0673c4ed6c')} has the field 'price' of non-numeric type object
+books> db.bookList.update({name:'java'},{$set:{price:300}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4,
+    yearOfPublish: 1899,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990,
+    rating: 4.5,
+    price: 300
+  }
+]
+books> db.bookList.updateMany({name:'java'},{$mul:{price:10}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4,
+    yearOfPublish: 1899,
+    price: 3000
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990,
+    rating: 4.5,
+    price: 300
+  }
+]
+books> db.bookList.updateMany({name:'java'},{$divide:{price:2}})
+MongoServerError: Unknown modifier: $divide. Expected a valid update modifier or pipeline-style update specified as an array
+books> db.bookList.aggregate([{$match:{name:'java'}},{$project:{name:1,nopage:1,price:{$divide:['$price',2]}}})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:103)
+
+> 1 | db.bookList.aggregate([{$match:{name:'java'}},{$project:{name:1,nopage:1,price:{$divide:['$price',2]}}})
+    |                                                                                                        ^
+  2 |
+
+books> db.bookList.aggregate([{$match:{name:'java'}},{$project:{name:1,nopage:1,price:{$divide:['$price',2]}}}])
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    price: 1500
+  }
+]
+books> db.bookList.aggregate([{$match:{name:'java'}},{$project:{name:1,nopage:1,price:{$multiply:['$price',2]}}}])
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    price: 6000
+  }
+]
+books> db.bookList.aggregate([{$match:{name:'java'}},{$project:{name:1,nopage:1,price:{$mod:['$price',2]}}}])
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    price: 0
+  }
+]
+books> db.bookList.aggregate([{$match:{name:'java'}},{$project:{name:1,nopage:1,price:{$pow:['$price',2]}}}])
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    price: 9000000
+  }
+]
+books> db.bookList.aggregate([{$match:{name:'java'}},{$project:{name:1,nopage:1,totalprice:{$multiply:['$price',2]}}}])
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    totalprice: 6000
+  }
+]
+books> db.bookList.aggregate([{$match:{name:'java'}},{$project:{_id:0,name:1,nopage:1,totalprice:{$multiply:['$price',2]}}}])
+[ { name: 'java', nopage: 300, totalprice: 6000 } ]
+books> db.bookList.aggregate([{$match:{name:'java'}}])
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4,
+    yearOfPublish: 1899,
+    price: 3000
+  }
+]
+books> db.bookList.aggregate([{$match:{name:'java'}},{$group:{_id:'$name'}}])
+[ { _id: 'java' } ]
+books> db.bookList.aggregate([{$group:{_id:'$name'}}])
+[
+  { _id: 'java' },
+  { _id: 'Python' },
+  { _id: 'php' },
+  { _id: 'javaScript' }
+]
+books> db.bookList.aggregate([{$group:{_id:'$name',bookDetails:{$push:'$ROOT'}}}])
+[
+  { _id: 'Python', bookDetails: [] },
+  { _id: 'javaScript', bookDetails: [] },
+  { _id: 'php', bookDetails: [] },
+  { _id: 'java', bookDetails: [] }
+]
+books> db.bookList.aggregate([{$group:{_id:'$name',bookDetails:{$push:'$$ROOT'}}}])
+[
+  {
+    _id: 'java',
+    bookDetails: [
+      {
+        _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+        name: 'java',
+        nopage: 300,
+        author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+        rating: 4,
+        yearOfPublish: 1899,
+        price: 3000
+      }
+    ]
+  },
+  {
+    _id: 'javaScript',
+    bookDetails: [
+      {
+        _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+        name: 'javaScript',
+        nopage: 300,
+        author: [
+          { name: 'CrockFord', place: 'canada', born: 1986 },
+          { name: 'John Resig', place: 'USA', born: 1990 }
+        ],
+        yearOfPublish: 1994,
+        rating: 3.7,
+        price: 300
+      }
+    ]
+  },
+  {
+    _id: 'Python',
+    bookDetails: [
+      {
+        _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+        name: 'Python',
+        nopage: 250,
+        author: [
+          {
+            name: 'duido van rossum',
+            born: 1995,
+            place: 'Netherlands'
+          }
+        ],
+        yearOfPublish: 19910,
+        rating: 4.5,
+        price: 300
+      }
+    ]
+  },
+  {
+    _id: 'php',
+    bookDetails: [
+      {
+        _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+        name: 'php',
+        nopage: 250,
+        author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+        yearOfPublish: 1990,
+        rating: 4.5,
+        price: 300
+      }
+    ]
+  }
+]
+books> db.bookList.aggregate([{$group:{_id:'$name',bookDetails:{$push:'$$ROOT'}}},{$project:{_id:0,'bookDetails._id':0,'bookDetails.yearOfPublish':0}}])
+[
+  {
+    bookDetails: [
+      {
+        name: 'Python',
+        nopage: 250,
+        author: [
+          {
+            name: 'duido van rossum',
+            born: 1995,
+            place: 'Netherlands'
+          }
+        ],
+        rating: 4.5,
+        price: 300
+      }
+    ]
+  },
+  {
+    bookDetails: [
+      {
+        name: 'java',
+        nopage: 300,
+        author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+        rating: 4,
+        price: 3000
+      }
+    ]
+  },
+  {
+    bookDetails: [
+      {
+        name: 'php',
+        nopage: 250,
+        author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+        rating: 4.5,
+        price: 300
+      }
+    ]
+  },
+  {
+    bookDetails: [
+      {
+        name: 'javaScript',
+        nopage: 300,
+        author: [
+          { name: 'CrockFord', place: 'canada', born: 1986 },
+          { name: 'John Resig', place: 'USA', born: 1990 }
+        ],
+        rating: 3.7,
+        price: 300
+      }
+    ]
+  }
+]
+books> db.bookList.aggregate([{$group:{_id:'$name',bookDetails:{$push:'$$ROOT'}}},{$project:{_id:0,'bookDetails._id':0,'bookDetails.yearOfPublish':0}},{$sort:{price:-1}}])
+[
+  {
+    bookDetails: [
+      {
+        name: 'Python',
+        nopage: 250,
+        author: [
+          {
+            name: 'duido van rossum',
+            born: 1995,
+            place: 'Netherlands'
+          }
+        ],
+        rating: 4.5,
+        price: 300
+      }
+    ]
+  },
+  {
+    bookDetails: [
+      {
+        name: 'java',
+        nopage: 300,
+        author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+        rating: 4,
+        price: 3000
+      }
+    ]
+  },
+  {
+    bookDetails: [
+      {
+        name: 'php',
+        nopage: 250,
+        author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+        rating: 4.5,
+        price: 300
+      }
+    ]
+  },
+  {
+    bookDetails: [
+      {
+        name: 'javaScript',
+        nopage: 300,
+        author: [
+          { name: 'CrockFord', place: 'canada', born: 1986 },
+          { name: 'John Resig', place: 'USA', born: 1990 }
+        ],
+        rating: 3.7,
+        price: 300
+      }
+    ]
+  }
+]
+
+
+
+Session 2
+
+books> db.bookList.update({name:'php','author.name':'rasmus'},{$set:{'author.$.place':'india'}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4,
+    yearOfPublish: 1899,
+    price: 3000
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'USA' } ],
+    yearOfPublish: 1990,
+    rating: 4.5,
+    price: 300
+  }
+]
+books> db.bookList.update({name:'php','author.name':'Rasmus'},{$set:{'author.$.place':'india'}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4,
+    yearOfPublish: 1899,
+    price: 3000
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'india' } ],
+    yearOfPublish: 1990,
+    rating: 4.5,
+    price: 300
+  }
+]
+books> db.bookList.update({'author.name':'rasmus'},{$push:{author:{name:'shekar',born:1984, place:'india'}}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+books> db.bookList.update({'author.name':'Rasmus'},{$push:{author:{name:'shekar',born:1984, place:'india'}}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4,
+    yearOfPublish: 1899,
+    price: 3000
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [
+      { name: 'Rasmus', born: 1980, place: 'india' },
+      { name: 'shekar', born: 1984, place: 'india' }
+    ],
+    yearOfPublish: 1990,
+    rating: 4.5,
+    price: 300
+  }
+]
+books> db.bookList.updateOne({'author.name':'shekar'},{$set:{'author.$.place':'Nepal'}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4,
+    yearOfPublish: 1899,
+    price: 3000
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [
+      { name: 'Rasmus', born: 1980, place: 'india' },
+      { name: 'shekar', born: 1984, place: 'Nepal' }
+    ],
+    yearOfPublish: 1990,
+    rating: 4.5,
+    price: 300
+  }
+]
+books> db.bookList.update({'author.born':'Nepal'},{$pop:{author:1}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+books> db.bookList.update({'author.place':'Nepal'},{$pop:{author:1}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4,
+    yearOfPublish: 1899,
+    price: 3000
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'india' } ],
+    yearOfPublish: 1990,
+    rating: 4.5,
+    price: 300
+  }
+]
+books> db.bookList.update({'author.name':'Rasmus'},{$push:[{name:'roshan', born:1980, place:'india'}]})
+MongoServerError: Modifiers operate on fields but we found type array instead. For example: {$mod: {<field>: ...}} not {$push: [ { name: "roshan", born: 1980, place: "india" } ]}
+books> db.bookList.update({'author.name':'Rasmus'},{$push:[{name:'roshan', born:1986, place:'india'}]})
+MongoServerError: Modifiers operate on fields but we found type array instead. For example: {$mod: {<field>: ...}} not {$push: [ { name: "roshan", born: 1986, place: "india" } ]}
+books> db.bookList.update({'author.name':'Rasmus'},{$push:{author:{name:'roshan', born:1986, place:'india'}}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4,
+    yearOfPublish: 1899,
+    price: 3000
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [
+      { name: 'Rasmus', born: 1980, place: 'india' },
+      { name: 'roshan', born: 1986, place: 'india' }
+    ],
+    yearOfPublish: 1990,
+    rating: 4.5,
+    price: 300
+  }
+]
+books> db.bookList.update({'author.name':'roshan'},{$pull:{author:{name:'roshan'}}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+books> db.bookList.find()
+[
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6c"),
+    name: 'java',
+    nopage: 300,
+    author: [ { name: 'james gosling', place: 'canada', born: 1995 } ],
+    rating: 4,
+    yearOfPublish: 1899,
+    price: 3000
+  },
+  {
+    _id: ObjectId("63d0b340b7d96e0673c4ed6d"),
+    name: 'Python',
+    nopage: 250,
+    author: [ { name: 'duido van rossum', born: 1995, place: 'Netherlands' } ],
+    yearOfPublish: 19910,
+    rating: 4.5,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6e"),
+    name: 'javaScript',
+    nopage: 300,
+    author: [
+      { name: 'CrockFord', place: 'canada', born: 1986 },
+      { name: 'John Resig', place: 'USA', born: 1990 }
+    ],
+    yearOfPublish: 1994,
+    rating: 3.7,
+    price: 300
+  },
+  {
+    _id: ObjectId("63d0b446b7d96e0673c4ed6f"),
+    name: 'php',
+    nopage: 250,
+    author: [ { name: 'Rasmus', born: 1980, place: 'india' } ],
+    yearOfPublish: 1990,
+    rating: 4.5,
+    price: 300
+  }
+]
